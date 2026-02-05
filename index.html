@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Configuración básica del documento HTML -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para mi Amor</title>
+    
+    <!-- Importar Font Awesome para íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* ========== ESTILOS GENERALES ========== */
+        /* Reset básico - elimina márgenes y padding por defecto */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box; /* Incluye padding y border en el tamaño total */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        /* Estilos del cuerpo de la página */
+        body {
+            background: linear-gradient(135deg, #ffafbd, #ffc3a0); /* Fondo degradado */
+            color: #5d3a3a; /* Color principal del texto */
+            min-height: 100vh; /* Ocupa al menos toda la altura de la ventana */
+            padding: 20px; /* Espacio interno alrededor del contenido */
+            display: flex; /* Usa flexbox para centrar contenido */
+            flex-direction: column; /* Organiza elementos en columna */
+            align-items: center; /* Centra horizontalmente */
+            overflow-x: hidden; /* Evita desplazamiento horizontal */
+        }
+        
+        /* ========== CONTENEDOR PRINCIPAL ========== */
+        .container {
+            max-width: 900px; /* Ancho máximo del contenido */
+            width: 100%; /* Ocupa todo el ancho disponible hasta 900px */
+            background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco semitransparente */
+            border-radius: 20px; /* Bordes redondeados */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* Sombra para efecto de elevación */
+            padding: 30px; /* Espacio interno */
+            margin-top: 20px; /* Margen superior */
+            position: relative; /* Posición relativa para elementos hijos posicionados */
+            overflow: hidden; /* Esconde contenido que se sale del contenedor */
+        }
+        
+        /* ========== DECORACIÓN DE CORAZONES ========== */
+        .heart-decoration {
+            position: absolute; /* Posición absoluta respecto al contenedor */
+            color: rgba(255, 105, 180, 0.2); /* Color rosa muy transparente */
+            font-size: 24px; /* Tamaño del ícono */
+            z-index: 0; /* Debajo del contenido principal */
+        }
+        
+        /* ========== CABECERA ========== */
+        .header {
+            text-align: center; /* Centra el texto */
+            margin-bottom: 30px; /* Espacio debajo del header */
+            position: relative; /* Posición relativa para contexto de z-index */
+            z-index: 1; /* Encima de los corazones decorativos */
+        }
+        
+        /* Título principal */
+        h1 {
+            color: #d63384; /* Color rosa fuerte */
+            font-size: 2.8rem; /* Tamaño grande */
+            margin-bottom: 10px; /* Espacio debajo */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil al texto */
+        }
+        
+        /* Subtítulo */
+        .subtitle {
+            font-size: 1.3rem; /* Tamaño de fuente */
+            color: #ff6b9d; /* Color rosa */
+            margin-bottom: 20px; /* Espacio debajo */
+        }
+        
+        /* ========== BOTONES CON FORMA DE CORAZÓN ========== */
+        .heart-btn {
+            background-color: #ff6b9d; /* Color de fondo rosa */
+            color: white; /* Texto blanco */
+            border: none; /* Sin borde */
+            padding: 12px 25px; /* Espacio interno */
+            font-size: 1.2rem; /* Tamaño de fuente */
+            border-radius: 50px; /* Bordes completamente redondeados (cápsula) */
+            cursor: pointer; /* Cambia cursor a mano al pasar sobre botón */
+            transition: all 0.3s ease; /* Transición suave para efectos */
+            margin: 10px; /* Margen alrededor */
+            display: inline-flex; /* Flex para alinear ícono y texto */
+            align-items: center; /* Centra verticalmente ícono y texto */
+            gap: 10px; /* Espacio entre ícono y texto */
+        }
+        
+        /* Efecto al pasar el mouse sobre botones */
+        .heart-btn:hover {
+            background-color: #d63384; /* Color más oscuro al hacer hover */
+            transform: scale(1.05); /* Aumenta ligeramente el tamaño */
+            box-shadow: 0 5px 15px rgba(214, 51, 132, 0.4); /* Sombra más pronunciada */
+        }
+        
+        /* ========== SECCIONES DE CONTENIDO ========== */
+        .content-section {
+            display: flex; /* Usa flexbox */
+            flex-direction: column; /* Organiza elementos en columna */
+            gap: 30px; /* Espacio entre elementos hijos */
+            margin-top: 30px; /* Margen superior */
+        }
+        
+        /* Tarjetas individuales */
+        .card {
+            background-color: white; /* Fondo blanco */
+            border-radius: 15px; /* Bordes redondeados */
+            padding: 25px; /* Espacio interno */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); /* Sombra suave */
+            transition: transform 0.3s ease; /* Transición para efecto hover */
+            position: relative; /* Para contexto de z-index */
+            z-index: 1; /* Encima del fondo */
+        }
+        
+        /* Efecto al pasar mouse sobre tarjetas */
+        .card:hover {
+            transform: translateY(-5px); /* Se eleva ligeramente */
+        }
+        
+        /* Títulos dentro de las tarjetas */
+        .card h2 {
+            color: #d63384; /* Color rosa */
+            margin-bottom: 15px; /* Espacio debajo */
+            display: flex; /* Para alinear ícono y texto */
+            align-items: center; /* Centra verticalmente */
+            gap: 10px; /* Espacio entre ícono y texto */
+        }
+        
+        /* Párrafos dentro de las tarjetas */
+        .card p {
+            line-height: 1.6; /* Espaciado entre líneas */
+            font-size: 1.1rem; /* Tamaño de fuente */
+            color: #5d3a3a; /* Color marrón suave */
+        }
+        
+        /* ========== SECCIÓN DE RECUERDOS ========== */
+        .memory-section {
+            display: grid; /* Usa CSS Grid para diseño */
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Columnas responsivas */
+            gap: 15px; /* Espacio entre elementos de la grid */
+            margin-top: 15px; /* Margen superior */
+        }
+        
+        /* Elementos individuales de recuerdo */
+        .memory-item {
+            background-color: #fff5f7; /* Fondo rosa muy claro */
+            border-radius: 10px; /* Bordes redondeados */
+            padding: 15px; /* Espacio interno */
+            text-align: center; /* Texto centrado */
+            border: 1px solid #ffd1dc; /* Borde rosa claro */
+            transition: all 0.3s ease; /* Transición suave */
+        }
+        
+        /* Efecto al pasar mouse sobre recuerdos */
+        .memory-item:hover {
+            background-color: #ffecf1; /* Fondo rosa un poco más oscuro */
+            transform: scale(1.03); /* Aumenta ligeramente el tamaño */
+        }
+        
+        /* ========== MARCO PARA FOTOS ========== */
+        .photo-frame {
+            width: 100%; /* Ocupa todo el ancho disponible */
+            height: 200px; /* Altura fija */
+            background-color: #f8f8f8; /* Fondo gris claro */
+            border-radius: 10px; /* Bordes redondeados */
+            display: flex; /* Para centrar contenido */
+            align-items: center; /* Centra verticalmente */
+            justify-content: center; /* Centra horizontalmente */
+            margin-bottom: 15px; /* Margen inferior */
+            overflow: hidden; /* Esconde contenido que se sale */
+            border: 3px solid #ffd1dc; /* Borde rosa */
+        }
+        
+        /* Íconos dentro de los marcos de foto */
+        .photo-frame i {
+            font-size: 4rem; /* Tamaño grande del ícono */
+            color: #ffafbd; /* Color rosa */
+        }
+        
+        /* ========== ÁREA PARA ESCRIBIR MENSAJES ========== */
+        .message-input {
+            width: 100%; /* Ocupa todo el ancho disponible */
+            padding: 15px; /* Espacio interno */
+            border-radius: 10px; /* Bordes redondeados */
+            border: 2px solid #ffd1dc; /* Borde rosa */
+            font-size: 1rem; /* Tamaño de fuente */
+            margin-top: 15px; /* Margen superior */
+            resize: vertical; /* Permite redimensionar solo verticalmente */
+            min-height: 100px; /* Altura mínima */
+        }
+        
+        /* ========== ÁREA INTERACTIVA ========== */
+        .interactive-area {
+            display: flex; /* Usa flexbox */
+            flex-direction: column; /* Organiza elementos en columna */
+            align-items: center; /* Centra horizontalmente */
+            margin: 30px 0; /* Margen vertical */
+        }
+        
+        /* Medidor de amor */
+        .love-meter {
+            width: 100%; /* Ocupa todo el ancho disponible */
+            max-width: 500px; /* Ancho máximo */
+            background-color: #fff5f7; /* Fondo rosa claro */
+            border-radius: 20px; /* Bordes redondeados */
+            padding: 20px; /* Espacio interno */
+            text-align: center; /* Texto centrado */
+            margin-bottom: 30px; /* Margen inferior */
+        }
+        
+        /* Barra del medidor */
+        .meter-bar {
+            height: 30px; /* Altura fija */
+            background-color: #ffd1dc; /* Color de fondo */
+            border-radius: 15px; /* Bordes redondeados */
+            margin: 20px 0; /* Margen vertical */
+            overflow: hidden; /* Esconde contenido que se sale */
+        }
+        
+        /* Parte que se llena del medidor */
+        .meter-fill {
+            height: 100%; /* Ocupa toda la altura del contenedor */
+            background-color: #ff6b9d; /* Color rosa */
+            width: 100%; /* Ancho inicial (se modifica con JS) */
+            border-radius: 15px; /* Bordes redondeados */
+            transition: width 1s ease; /* Transición suave para cambios de ancho */
+        }
+        
+        /* Contador numérico */
+        .counter {
+            font-size: 2rem; /* Tamaño grande */
+            color: #d63384; /* Color rosa fuerte */
+            font-weight: bold; /* Texto en negrita */
+        }
+        
+        /* Contenedor de corazones flotantes */
+        .hearts-container {
+            display: flex; /* Usa flexbox */
+            flex-wrap: wrap; /* Permite que los corazones pasen a siguiente línea */
+            justify-content: center; /* Centra horizontalmente */
+            gap: 15px; /* Espacio entre corazones */
+            margin-top: 20px; /* Margen superior */
+        }
+        
+        /* Corazones individuales flotantes */
+        .floating-heart {
+            font-size: 2rem; /* Tamaño grande */
+            color: #ff6b9d; /* Color rosa */
+            cursor: pointer; /* Cambia cursor a mano */
+            transition: all 0.5s ease; /* Transición suave */
+            animation: float 3s infinite ease-in-out; /* Animación de flotación */
+        }
+        
+        /* ========== ANIMACIÓN DE FLOTACIÓN ========== */
+        /* Define la animación para los corazones flotantes */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); } /* Posición inicial y final */
+            50% { transform: translateY(-15px); } /* Posición más alta en medio de la animación */
+        }
+        
+        /* ========== PIE DE PÁGINA ========== */
+        footer {
+            margin-top: 40px; /* Margen superior grande */
+            text-align: center; /* Texto centrado */
+            color: #d63384; /* Color rosa */
+            font-size: 1.1rem; /* Tamaño de fuente */
+            padding: 20px; /* Espacio interno */
+            width: 100%; /* Ocupa todo el ancho */
+        }
+        
+        /* ========== MEDIA QUERIES (RESPONSIVO) ========== */
+        /* Estilos para pantallas más pequeñas (móviles y tablets) */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px; /* Reduce espacio interno en móviles */
+            }
+            
+            h1 {
+                font-size: 2.2rem; /* Reduce tamaño de título en móviles */
+            }
+            
+            .memory-section {
+                /* Ajusta grid para pantallas pequeñas */
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- CONTENEDOR PRINCIPAL DE LA PÁGINA -->
+    <div class="container">
+        <!-- CORAZONES DECORATIVOS - Posicionados en diferentes lugares -->
+        <div class="heart-decoration" style="top: 10px; left: 20px;">❤</div>
+        <div class="heart-decoration" style="top: 40px; right: 30px;">❤</div>
+        <div class="heart-decoration" style="bottom: 60px; left: 40px;">❤</div>
+        <div class="heart-decoration" style="bottom: 30px; right: 50px;">❤</div>
+        
+        <!-- CABECERA CON TÍTULO Y BOTONES -->
+        <div class="header">
+            <h1>Para mi Amor ❤️</h1>
+            <p class="subtitle">Una página especial para la persona más especial de mi vida</p>
+            
+            <!-- BOTONES PRINCIPALES -->
+            <div>
+                <button class="heart-btn" id="surpriseBtn">
+                    <i class="fas fa-gift"></i> Sorpresa especial
+                </button>
+                <button class="heart-btn" id="loveMsgBtn">
+                    <i class="fas fa-heart"></i> Mensaje de amor
+                </button>
+            </div>
+        </div>
+        
+        <!-- SECCIONES DE CONTENIDO PRINCIPAL -->
+        <div class="content-section">
+            <!-- TARJETA 1: MENSAJE DE AMOR PRINCIPAL -->
+            <div class="card">
+                <h2><i class="fas fa-heart"></i> Para ti, mi amor</h2>
+                <p id="personalMessage">Eres la persona más increíble que he conocido. Cada día a tu lado es un regalo que atesoro con todo mi corazón. Esta página es solo un pequeño recordatorio de todo lo que siento por ti.</p>
+                
+                <!-- ÁREA INTERACTIVA CON MEDIDOR DE AMOR Y CORAZONES -->
+                <div class="interactive-area">
+                    <div class="love-meter">
+                        <h3>Nuestro nivel de amor</h3>
+                        <div class="meter-bar">
+                            <div class="meter-fill" id="loveMeter"></div>
+                        </div>
+                        <div class="counter" id="loveCounter">100%</div>
+                        <button class="heart-btn" id="increaseLoveBtn">
+                            <i class="fas fa-heartbeat"></i> Aumentar el amor
+                        </button>
+                    </div>
+                    
+                    <!-- CONTENEDOR DONDE SE GENERAN CORAZONES DINÁMICAMENTE -->
+                    <div class="hearts-container" id="heartsContainer">
+                        <!-- Los corazones se generarán con JavaScript -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- TARJETA 2: RECUERDOS -->
+            <div class="card">
+                <h2><i class="fas fa-memory"></i> Nuestros recuerdos</h2>
+                <p>Algunos de los momentos que más atesoro de nuestra relación:</p>
+                
+                <!-- GRID DE RECUERDOS -->
+                <div class="memory-section">
+                    <div class="memory-item">
+                        <div class="photo-frame">
+                            <i class="fas fa-calendar-heart"></i>
+                        </div>
+                        <p>Nuestro primer día juntos</p>
+                    </div>
+                    <div class="memory-item">
+                        <div class="photo-frame">
+                            <i class="fas fa-film"></i>
+                        </div>
+                        <p>Nuestra primera película</p>
+                    </div>
+                    <div class="memory-item">
+                        <div class="photo-frame">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <p>Nuestra cena especial</p>
+                    </div>
+                    <div class="memory-item">
+                        <div class="photo-frame">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p>Ese día inolvidable</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- TARJETA 3: ESCRIBIR MENSAJE -->
+            <div class="card">
+                <h2><i class="fas fa-edit"></i> Escribe un mensaje para mí</h2>
+                <p>Esta parte es para ti, mi amor. Escribe lo que quieras y lo guardaré para siempre:</p>
+                <textarea class="message-input" id="loveMessage" placeholder="Escribe tu mensaje de amor aquí..."></textarea>
+                <button class="heart-btn" id="saveMessageBtn">
+                    <i class="fas fa-save"></i> Guardar mensaje
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- PIE DE PÁGINA -->
+    <footer>
+        <p>Hecho con ❤️ por tu novio - Para la mujer más maravillosa del universo</p>
+        <p id="currentDate"></p>
+    </footer>
+
+    <!-- ========== JAVASCRIPT ========== -->
+    <script>
+        // ========== VARIABLES GLOBALES Y REFERENCIAS A ELEMENTOS DOM ==========
+        // Obtener referencias a los elementos HTML usando sus IDs
+        const surpriseBtn = document.getElementById('surpriseBtn');
+        const loveMsgBtn = document.getElementById('loveMsgBtn');
+        const increaseLoveBtn = document.getElementById('increaseLoveBtn');
+        const saveMessageBtn = document.getElementById('saveMessageBtn');
+        const loveMeter = document.getElementById('loveMeter');
+        const loveCounter = document.getElementById('loveCounter');
+        const heartsContainer = document.getElementById('heartsContainer');
+        const personalMessage = document.getElementById('personalMessage');
+        const loveMessage = document.getElementById('loveMessage');
+        const currentDate = document.getElementById('currentDate');
+        
+        // ========== VARIABLES DE ESTADO ==========
+        // Controla el nivel de amor (porcentaje)
+        let loveLevel = 100;
+        // Cuenta cuántos corazones se han generado
+        let heartCount = 0;
+        
+        // ========== ARRAYS DE DATOS ==========
+        // Lista de mensajes de amor que se muestran aleatoriamente
+        const loveMessages = [
+            "Eres la persona más increíble que he conocido en mi vida.",
+            "Cada día a tu lado es un regalo que atesoro con todo mi corazón.",
+            "Tu sonrisa ilumina mis días más grises.",
+            "No existe un lugar en el mundo donde me sienta más feliz que a tu lado.",
+            "Eres mi sueño hecho realidad, mi razón para ser mejor cada día.",
+            "Amo todo de ti: tu forma de ser, tu risa, tu mirada, tu esencia.",
+            "Eres mi persona favorita en todo el universo.",
+            "Contigo he encontrado un amor que nunca imaginé posible.",
+            "Gracias por ser exactamente como eres, perfecta en cada detalle.",
+            "Mi amor por ti crece más y más cada día que pasa."
+        ];
+        
+        // ========== FUNCIONES DE INICIALIZACIÓN ==========
+        /**
+         * Inicializa la página cuando se carga
+         * Configura la fecha actual y genera elementos iniciales
+         */
+        function initPage() {
+            // Establecer la fecha actual en el pie de página
+            const today = new Date();
+            // Opciones para formatear la fecha en español
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            // Mostrar la fecha formateada
+            currentDate.textContent = today.toLocaleDateString('es-ES', options);
+            
+            // Generar corazones flotantes iniciales
+            generateHearts(15);
+            
+            // Actualizar el medidor de amor con el valor inicial
+            updateLoveMeter();
+        }
+        
+        // ========== FUNCIONES PARA MANEJAR CORAZONES ==========
+        /**
+         * Genera corazones flotantes en el contenedor
+         * @param {number} count - Número de corazones a generar
+         */
+        function generateHearts(count) {
+            // Limpiar corazones existentes
+            heartsContainer.innerHTML = '';
+            
+            // Crear 'count' corazones
+            for (let i = 0; i < count; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('floating-heart');
+                heart.innerHTML = '❤'; // Símbolo de corazón
+                
+                // Establecer propiedades aleatorias para variedad visual
+                heart.style.animationDelay = `${i * 0.2}s`; // Retraso en la animación
+                heart.style.fontSize = `${Math.random() * 20 + 20}px`; // Tamaño aleatorio
+                heart.style.color = getRandomHeartColor(); // Color aleatorio
+                
+                // Agregar interactividad: efecto al hacer clic
+                heart.addEventListener('click', function() {
+                    // Efecto visual al hacer clic
+                    this.style.transform = 'scale(1.5)';
+                    this.style.color = '#d63384';
+                    
+                    // Revertir efecto después de 300ms
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 300);
+                });
+                
+                // Agregar corazón al contenedor
+                heartsContainer.appendChild(heart);
+            }
+        }
+        
+        /**
+         * Devuelve un color aleatorio para corazones
+         * @returns {string} Código hexadecimal del color
+         */
+        function getRandomHeartColor() {
+            // Array de colores rosas para corazones
+            const colors = ['#ff6b9d', '#ff8fab', '#ffafcc', '#ffc4d6', '#ff8e9e'];
+            // Seleccionar color aleatorio del array
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+        
+        // ========== FUNCIONES PARA EL MEDIDOR DE AMOR ==========
+        /**
+         * Actualiza la barra y el contador del medidor de amor
+         * Cambia el color según el nivel
+         */
+        function updateLoveMeter() {
+            // Actualizar ancho de la barra de llenado
+            loveMeter.style.width = `${loveLevel}%`;
+            // Actualizar texto del contador
+            loveCounter.textContent = `${loveLevel}%`;
+            
+            // Cambiar color según el nivel de amor
+            if (loveLevel < 30) {
+                loveMeter.style.backgroundColor = '#ff8e9e'; // Rosa claro para niveles bajos
+            } else if (loveLevel < 70) {
+                loveMeter.style.backgroundColor = '#ff8fab'; // Rosa medio
+            } else {
+                loveMeter.style.backgroundColor = '#ff6b9d'; // Rosa fuerte para niveles altos
+            }
+        }
+        
+        /**
+         * Aumenta el nivel de amor cuando se hace clic en el botón
+         * Agrega corazones y muestra mensajes
+         */
+        function increaseLove() {
+            // Solo aumentar si no está al máximo
+            if (loveLevel < 100) {
+                loveLevel += 10; // Aumentar en 10%
+                
+                // Asegurar que no pase de 100%
+                if (loveLevel > 100) loveLevel = 100;
+                
+                // Actualizar visualización del medidor
+                updateLoveMeter();
+                
+                // Agregar un nuevo corazón
+                addHeart();
+                
+                // Mostrar mensaje de amor aleatorio
+                const randomMsg = loveMessages[Math.floor(Math.random() * loveMessages.length)];
+                showNotification(`💖 ${randomMsg}`);
+            } else {
+                // Si ya está al máximo, mostrar mensaje especial
+                showNotification('¡Nuestro amor ya está al máximo! ❤️');
+            }
+        }
+        
+        /**
+         * Agrega un nuevo corazón al contenedor
+         * Se llama cada vez que aumenta el amor
+         */
+        function addHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('floating-heart');
+            heart.innerHTML = '❤';
+            
+            // Propiedades aleatorias para variedad
+            heart.style.animationDelay = `${heartCount * 0.1}s`;
+            heart.style.fontSize = `${Math.random() * 15 + 20}px`;
+            heart.style.color = getRandomHeartColor();
+            
+            // Agregar interactividad al nuevo corazón
+            heart.addEventListener('click', function() {
+                this.style.transform = 'scale(1.5)';
+                this.style.color = '#d63384';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 300);
+            });
+            
+            // Agregar al contenedor y aumentar contador
+            heartsContainer.appendChild(heart);
+            heartCount++;
+        }
+        
+        // ========== FUNCIONES DE NOTIFICACIÓN ==========
+        /**
+         * Muestra una notificación temporal en la esquina superior derecha
+         * @param {string} message - Mensaje a mostrar
+         */
+        function showNotification(message) {
+            // Crear elemento de notificación
+            const notification = document.createElement('div');
+            
+            // Estilos para posicionar la notificación
+            notification.style.position = 'fixed';
+            notification.style.top = '20px';
+            notification.style.right = '20px';
+            notification.style.backgroundColor = '#ff6b9d';
+            notification.style.color = 'white';
+            notification.style.padding = '15px 20px';
+            notification.style.borderRadius = '10px';
+            notification.style.boxShadow = '0 5px 15px rgba(0,0,0,0.2)';
+            notification.style.zIndex = '1000';
+            notification.style.fontSize = '1rem';
+            notification.style.maxWidth = '300px';
+            notification.textContent = message;
+            
+            // Agregar notificación al documento
+            document.body.appendChild(notification);
+            
+            // Eliminar notificación después de 3 segundos con efecto de desvanecimiento
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transition = 'opacity 0.5s ease';
+                
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 500); // Esperar a que termine la transición
+            }, 3000); // Mostrar por 3 segundos
+        }
+        
+        // ========== FUNCIONES DE SORPRESA ==========
+        /**
+         * Muestra una sorpresa especial: cambia el mensaje principal
+         * y aplica efectos visuales
+         */
+        function showSurprise() {
+            // Mensajes de sorpresa
+            const surpriseMessages = [
+                "¡Eres la mujer más increíble del mundo!",
+                "Cada día me enamoro más de ti",
+                "Tu felicidad es mi mayor prioridad",
+                "Eres mi sueño hecho realidad",
+                "No cambio un segundo a tu lado por nada"
+            ];
+            
+            // Seleccionar mensaje aleatorio
+            const randomSurprise = surpriseMessages[Math.floor(Math.random() * surpriseMessages.length)];
+            
+            // Cambiar el mensaje principal con estilo especial
+            personalMessage.textContent = randomSurprise;
+            personalMessage.style.color = '#d63384';
+            personalMessage.style.fontWeight = 'bold';
+            personalMessage.style.fontSize = '1.3rem';
+            personalMessage.style.transition = 'all 0.5s ease';
+            
+            // Efecto visual en el título
+            document.querySelector('.header h1').style.textShadow = '0 0 10px rgba(255, 107, 157, 0.7)';
+            
+            // Revertir efecto después de 2 segundos
+            setTimeout(() => {
+                document.querySelector('.header h1').style.textShadow = '2px 2px 4px rgba(0, 0, 0, 0.1)';
+            }, 2000);
+            
+            // Mostrar notificación de confirmación
+            showNotification('💝 ¡Sorpresa! Te amo más de lo que las palabras pueden expresar.');
+        }
+        
+        /**
+         * Muestra un mensaje de amor en un modal/popup
+         */
+        function showLoveMessage() {
+            // Seleccionar mensaje aleatorio
+            const randomIndex = Math.floor(Math.random() * loveMessages.length);
+            const message = loveMessages[randomIndex];
+            
+            // Crear modal (ventana emergente)
+            const modal = document.createElement('div');
+            
+            // Estilos del fondo del modal (oscuro semitransparente)
+            modal.style.position = 'fixed';
+            modal.style.top = '0';
+            modal.style.left = '0';
+            modal.style.width = '100%';
+            modal.style.height = '100%';
+            modal.style.backgroundColor = 'rgba(0,0,0,0.7)';
+            modal.style.display = 'flex';
+            modal.style.justifyContent = 'center';
+            modal.style.alignItems = 'center';
+            modal.style.zIndex = '2000'; // Muy alto para estar sobre todo
+            
+            // Crear contenido del modal
+            const modalContent = document.createElement('div');
+            modalContent.style.backgroundColor = 'white';
+            modalContent.style.padding = '30px';
+            modalContent.style.borderRadius = '20px';
+            modalContent.style.maxWidth = '500px';
+            modalContent.style.width = '90%';
+            modalContent.style.textAlign = 'center';
+            modalContent.style.boxShadow = '0 10px 30px rgba(0,0,0,0.3)';
+            
+            // Ícono de corazón grande
+            const heartIcon = document.createElement('div');
+            heartIcon.innerHTML = '❤️';
+            heartIcon.style.fontSize = '4rem';
+            heartIcon.style.marginBottom = '20px';
+            
+            // Texto del mensaje
+            const messageText = document.createElement('p');
+            messageText.textContent = message;
+            messageText.style.fontSize = '1.4rem';
+            messageText.style.color = '#d63384';
+            messageText.style.marginBottom = '25px';
+            messageText.style.lineHeight = '1.5';
+            
+            // Botón para cerrar el modal
+            const closeBtn = document.createElement('button');
+            closeBtn.textContent = 'Cerrar';
+            closeBtn.classList.add('heart-btn');
+            closeBtn.style.marginTop = '10px';
+            
+            // Evento para cerrar el modal
+            closeBtn.addEventListener('click', () => {
+                document.body.removeChild(modal);
+            });
+            
+            // Construir y mostrar el modal
+            modalContent.appendChild(heartIcon);
+            modalContent.appendChild(messageText);
+            modalContent.appendChild(closeBtn);
+            modal.appendChild(modalContent);
+            document.body.appendChild(modal);
+        }
+        
+        // ========== FUNCIONES PARA GUARDAR MENSAJES ==========
+        /**
+         * Guarda el mensaje escrito en el textarea
+         * Usa localStorage para persistencia (simulada)
+         */
+        function saveMessage() {
+            // Obtener y limpiar el mensaje
+            const message = loveMessage.value.trim();
+            
+            // Validar que haya contenido
+            if (message === '') {
+                showNotification('Por favor, escribe un mensaje antes de guardar.');
+                return; // Salir de la función si está vacío
+            }
+            
+            // En una aplicación real, aquí enviarías el mensaje a un servidor
+            // Por ahora, usamos localStorage (almacenamiento en el navegador)
+            localStorage.setItem('loveMessageForGirlfriend', message);
+            
+            // Mostrar confirmación
+            showNotification('💌 ¡Mensaje guardado! Lo atesoraré por siempre.');
+            
+            // Limpiar el área de texto
+            loveMessage.value = '';
+        }
+        
+        /**
+         * Carga mensajes guardados previamente (si existen)
+         * Se llama al cargar la página
+         */
+        function loadSavedMessage() {
+            // Obtener mensaje guardado de localStorage
+            const savedMessage = localStorage.getItem('loveMessageForGirlfriend');
+            
+            // Si hay mensaje guardado, hacer algo con él
+            if (savedMessage) {
+                // Aquí podrías mostrar el mensaje en algún lugar de la página
+                console.log('Mensaje guardado:', savedMessage);
+                // Por ejemplo, podrías crear una sección para mostrar mensajes guardados
+            }
+        }
+        
+        // ========== ASIGNACIÓN DE EVENTOS ==========
+        // Asignar funciones a los eventos de clic en botones
+        surpriseBtn.addEventListener('click', showSurprise);
+        loveMsgBtn.addEventListener('click', showLoveMessage);
+        increaseLoveBtn.addEventListener('click', increaseLove);
+        saveMessageBtn.addEventListener('click', saveMessage);
+        
+        // ========== INICIALIZACIÓN CUANDO SE CARGA LA PÁGINA ==========
+        // Ejecutar funciones de inicialización cuando el DOM esté completamente cargado
+        window.addEventListener('DOMContentLoaded', () => {
+            initPage(); // Configurar página
+            loadSavedMessage(); // Cargar mensajes guardados
+        });
+    </script>
+</body>
+</html>
